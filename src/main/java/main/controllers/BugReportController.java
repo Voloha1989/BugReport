@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-@Api(value = "/bugReport",description = "отчет об ошибке")
+@Api(value = "/bugReport", description = "Контроллер для отчета об ошибках")
 @RestController
 @RequestMapping("/bugReport")
 public class BugReportController {
@@ -53,7 +53,6 @@ public class BugReportController {
             bugReport = bugReportDao.findById(requestJ.getLong("id"));
 
             if (bugReport == null) {
-
                 status.setError("Запись не найдена");
                 responseAddBug.setStatus(status);
                 return responseAddBug;
@@ -64,7 +63,6 @@ public class BugReportController {
         }
 
         if (!requestJ.has("error_message")) {
-
             status.setError("Отсутствует error_message");
             responseAddBug.setStatus(status);
             return responseAddBug;
@@ -73,24 +71,21 @@ public class BugReportController {
         bugReport.setErrorMessage(requestJ.getString("error_message"));
 
         if (requestJ.has("name")) {
-
             bugReport.setName(requestJ.getString("name"));
         }
 
         bugReport.setDate(new Timestamp(new Date().getTime()));
-
         bugReportDao.save(bugReport);
 
         status.setError("ok");
 
         responseAddBug.setId(bugReport.getId());
-
         responseAddBug.setStatus(status);
 
         return responseAddBug;
     }
 
-    @ApiOperation(value = "Получение отчет об ошибках")
+    @ApiOperation(value = "Получение отчета об ошибках")
     @RequestMapping(value = "/select", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseSelectBug selectBugReport(
 
@@ -108,12 +103,10 @@ public class BugReportController {
         List<EntityBugReport> listBugReport = bugReportDao.findAllByIdIsNotNull();
 
         if (listBugReport != null && listBugReport.size() != 0) {
-
             responseSelectBug.setAllBugReports(listBugReport);
         }
 
         status.setError("ok");
-
         responseSelectBug.setStatus(status);
 
         return responseSelectBug;
@@ -135,7 +128,6 @@ public class BugReportController {
         BugReportDao bugReportDao = ctx.getBean("jpaBugReport", BugReportDao.class);
 
         if (!requestJ.has("id")) {
-
             status.setError("Отсутствует id");
             deleteReport.setStatus(status);
             return deleteReport;
@@ -150,13 +142,11 @@ public class BugReportController {
         }
 
         ReportCorrectionsDao reportCorrectionsDao = ctx.getBean("jpaReportCorrections", ReportCorrectionsDao.class);
-
         reportCorrectionsDao.deleteAllByBugId(id);
 
         bugReportDao.deleteById(id);
 
         status.setError("ok");
-
         deleteReport.setStatus(status);
 
         return deleteReport;

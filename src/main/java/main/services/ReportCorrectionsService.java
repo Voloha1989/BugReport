@@ -11,7 +11,6 @@ public class ReportCorrectionsService {
     public JSONObject getReportCorrectionsJ(EntityBugReport bugReport, List<EntityReportCorrections> listReportCorrections) {
 
         if (bugReport == null) {
-
             return null;
         }
 
@@ -24,16 +23,13 @@ public class ReportCorrectionsService {
             for (EntityReportCorrections reportCorrections : listReportCorrections) {
 
                 JSONObject reportCorrectionsJ = new JSONObject(reportCorrections);
-
                 reportCorrectionsJ.remove("bugId");
-
                 reportCorrectionsArrayJ.put(reportCorrectionsJ);
 
             }
         }
 
         if (reportCorrectionsArrayJ.length() != 0) {
-
             bugReportJ.put("report_corrections", reportCorrectionsArrayJ);
         }
 

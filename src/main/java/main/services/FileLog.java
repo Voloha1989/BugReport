@@ -10,7 +10,6 @@ public class FileLog {
     private String path = "C:\\Users\\User\\IdeaProjects/Logs.txt";
     
     //private String path = System.getProperty("jboss.home.dir") + "/Logs.txt";
-
     //private String path = "Logs.txt";
 
     private File logFile = new File(path);
@@ -37,16 +36,13 @@ public class FileLog {
     }
 
     public void deleteByDateLogFile(long requestDate) {
-
         JSONArray logArrayJ = getLogArrayJ();
-
         rewriteLogFile(logArrayJ, requestDate);
     }
 
     private void rewriteLogFile(JSONArray logArrayJ, long requestDate) {
 
         if (logArrayJ == null || logArrayJ.length() == 0) {
-
             return;
         }
 
@@ -59,7 +55,6 @@ public class FileLog {
             if (requestDate >= date) {
 
                 try {
-
                     FileWriter fileWriter = new FileWriter(path);
 
                     BufferedWriter writer = new BufferedWriter(fileWriter);
@@ -69,7 +64,6 @@ public class FileLog {
                     writer.close();
 
                 } catch (IOException e) {
-
                     e.printStackTrace();
                 }
             }
@@ -81,9 +75,7 @@ public class FileLog {
         JSONArray logArrayJ = new JSONArray();
 
         try {
-
             FileReader fileReader = new FileReader(logFile);
-
             BufferedReader reader = new BufferedReader(fileReader);
 
             String date;

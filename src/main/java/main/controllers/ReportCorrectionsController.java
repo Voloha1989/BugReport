@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-@Api(value = "/reportCorrections",description = "отчет о исправлениях")
+@Api(value = "/reportCorrections", description = "Контроллер для отчета об исправлениях")
 @RestController
 @RequestMapping("/reportCorrections")
 public class ReportCorrectionsController {
@@ -30,7 +30,7 @@ public class ReportCorrectionsController {
         this.ctx = ctx;
     }
 
-    @ApiOperation(value = "Сохранение отчета о исправлениях")
+    @ApiOperation(value = "Сохранение отчета об исправлениях")
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseAddCorrections saveReportCorrections(
 
@@ -46,7 +46,6 @@ public class ReportCorrectionsController {
         Status status = new Status();
 
         if (!requestJ.has("bug_id")) {
-
             status.setError("Отсутствует bug_id");
             responseAddCorrections.setStatus(status);
             return responseAddCorrections;
@@ -71,7 +70,6 @@ public class ReportCorrectionsController {
             reportCorrections = reportCorrectionsDao.findById(requestJ.getLong("id"));
 
             if (reportCorrections == null) {
-
                 status.setError("Запись не найдена");
                 responseAddCorrections.setStatus(status);
                 return responseAddCorrections;
@@ -82,33 +80,29 @@ public class ReportCorrectionsController {
         }
 
         if (!requestJ.has("comment")) {
-
-            status.setError("Отсутствует комментарий о исправлении");
+            status.setError("Отсутствует комментарий об исправлении");
             responseAddCorrections.setStatus(status);
             return responseAddCorrections;
         }
 
         reportCorrections.setBugId(bugId);
-
         reportCorrections.setComment(requestJ.getString("comment"));
 
         Date date = new Date();
 
         reportCorrections.setDate(new Timestamp(date.getTime()));
-
         reportCorrectionsDao.save(reportCorrections);
 
         status.setError("ok");
 
         responseAddCorrections.setId(reportCorrections.getId());
-
         responseAddCorrections.setStatus(status);
 
         return responseAddCorrections;
 
     }
 
-    @ApiOperation(value = "Получение отчета о исправлениях")
+    @ApiOperation(value = "Получение отчета об исправлениях")
     @RequestMapping(value = "/select", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseSelectCorrections selectReportCorrections(
 
@@ -141,7 +135,6 @@ public class ReportCorrectionsController {
             List<EntityReportCorrections> reportCorrectionsList = reportCorrectionsDao.findAllByBugId(bugId);
 
             responseSelectCorrections.setBugReport(bugReport);
-
             responseSelectCorrections.setAllReportCorrections(reportCorrectionsList);
 
             status.setError("ok");
@@ -154,18 +147,16 @@ public class ReportCorrectionsController {
         List<EntityReportCorrections> listReportCorrections = reportCorrectionsDao.findAllByIdIsNotNull();
 
         if (listReportCorrections != null) {
-
             responseSelectCorrections.setAllReportCorrections(listReportCorrections);
         }
 
         status.setError("ok");
-
         responseSelectCorrections.setStatus(status);
 
         return responseSelectCorrections;
     }
 
-    @ApiOperation(value = "Удаление отчета о исправлении")
+    @ApiOperation(value = "Удаление отчета об исправлении")
     @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     DeleteReport deleteReportCorrections(
 
@@ -181,7 +172,6 @@ public class ReportCorrectionsController {
         ReportCorrectionsDao reportCorrectionsDao = ctx.getBean("jpaReportCorrections", ReportCorrectionsDao.class);
 
         if (!requestJ.has("id")) {
-
             status.setError("Отсутствует id");
             deleteReport.setStatus(status);
             return deleteReport;
@@ -198,7 +188,6 @@ public class ReportCorrectionsController {
         reportCorrectionsDao.deleteById(id);
 
         status.setError("ok");
-
         deleteReport.setStatus(status);
 
         return deleteReport;

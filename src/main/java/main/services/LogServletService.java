@@ -11,7 +11,6 @@ public class LogServletService {
     public JSONArray getNewLogArrayJ(JSONArray logArrayJ, long requestDate, long currentDate) {
 
         if (logArrayJ == null || logArrayJ.length() == 0) {
-
             return null;
         }
 
@@ -20,11 +19,9 @@ public class LogServletService {
         for (int i = 0; i < logArrayJ.length(); i++) {
 
             JSONObject logJ = logArrayJ.getJSONObject(i);
-
             long date = logJ.getLong("date");
 
             if (requestDate <= date && date <= currentDate) {
-
                 newLogArrayJ.put(logJ);
             }
         }
@@ -35,14 +32,12 @@ public class LogServletService {
     public JSONArray getReverseLogArrayJ(JSONArray newLogArrayJ) {
 
         if (newLogArrayJ == null || newLogArrayJ.length() == 0) {
-
             return null;
         }
 
         JSONArray reverseLogArrayJ = new JSONArray();
 
         for (int i = newLogArrayJ.length()-1; i >= 0; i--) {
-
             reverseLogArrayJ.put(newLogArrayJ.getJSONObject(i));
         }
 
@@ -52,7 +47,6 @@ public class LogServletService {
     public List<Log> getLogArrayModules(JSONArray reverseLogArrayJ) {
 
         if (reverseLogArrayJ == null || reverseLogArrayJ.length() == 0) {
-
             return null;
         }
 

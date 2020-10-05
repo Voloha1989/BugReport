@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-@Api(value = "/log",description = "логи")
+@Api(value = "/log", description = "Контроллер для логов")
 @RestController
 @RequestMapping("/log")
 public class LogController {
@@ -41,11 +41,8 @@ public class LogController {
         JSONArray logArrayJ = fileLog.getLogArrayJ();
 
         if (logArrayJ == null || logArrayJ.length() == 0) {
-
             status.setError("ок");
-
             responseLogs.setStatus(status);
-
             return responseLogs;
         }
 
@@ -55,21 +52,18 @@ public class LogController {
         LogServletService lSS = new LogServletService();
 
         JSONArray newLogArrayJ = lSS.getNewLogArrayJ(logArrayJ, Long.parseLong(requestDate), currentDate.getTime());
-
         JSONArray reverseLogArrayJ = lSS.getReverseLogArrayJ(newLogArrayJ);
 
         List<Log> logList = lSS.getLogArrayModules(reverseLogArrayJ);
-
         responseLogs.setLog(logList);
 
         status.setError("ok");
-
         responseLogs.setStatus(status);
 
         return responseLogs;
     }
 
-    @ApiOperation(value = "Для сохранения логов")
+    @ApiOperation(value = "Сохранение логов")
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void saveLog(
 
@@ -110,21 +104,18 @@ public class LogController {
         long date = Long.parseLong(requestDate);
 
         ResponseDelete responseDelete = new ResponseDelete();
-
         Status status = new Status();
 
         FileLog fileLog = new FileLog();
-
         fileLog.deleteByDateLogFile(date);
 
         status.setError("ok");
-
         responseDelete.setStatus(status);
 
         return responseDelete;
     }
 
-    @ApiOperation(value = "Удалить весь файл с логами")
+    @ApiOperation(value = "Удаление файла с логами")
     @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     DeleteLogFile deleteFileLog(
 
@@ -136,15 +127,12 @@ public class LogController {
         String path = "C:\\Users\\User\\IdeaProjects/Logs.txt";
 
         //String path = System.getProperty("jboss.home.dir") + "/Log.txt";
-
         //String path = "Logs.txt";
 
         File logFile = new File(path);
-
         DeleteLogFile deleteLogFile = new DeleteLogFile();
 
         JsonBody jsonBody = new JsonBody();
-
         jsonBody.setStatusLog("logFile не существует");
 
         if (logFile.exists()) {
@@ -152,21 +140,16 @@ public class LogController {
             boolean checkDelete = logFile.delete();
 
             if (checkDelete) {
-
                 jsonBody.setStatusLog("logFile удалён");
-
             } else {
-
                 jsonBody.setStatusLog("logFile не удалён");
             }
         }
 
         Status status = new Status();
-
         status.setError("ok");
 
         deleteLogFile.setJsonBody(jsonBody);
-
         deleteLogFile.setStatus(status);
 
         return deleteLogFile;
