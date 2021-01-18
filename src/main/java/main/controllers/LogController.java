@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/log")
 public class LogController {
 
-    @ApiOperation(value = "Для получения логов - /ice/s/select.log")
+    @ApiOperation(value = "Получение логов")
     @RequestMapping(value = "/select", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseLogs selectLog(
 

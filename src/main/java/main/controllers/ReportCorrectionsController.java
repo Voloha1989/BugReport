@@ -30,13 +30,13 @@ public class ReportCorrectionsController {
         this.ctx = ctx;
     }
 
-    @ApiOperation(value = "Сохранение отчета об исправлениях")
+    @ApiOperation(value = "Сохранение отчета об исправлении")
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseAddCorrections saveReportCorrections(
 
             @ApiParam(name = "request",
                     value = "bug_id - id ошибки, " +
-                            "comment - комментарий о исправлении, " +
+                            "comment - комментарий об исправлении, " +
                             "id - опционально нужен для перезаписи",
                     defaultValue = "{comment:comment,bug_id:1}")
             @RequestParam(name = "request") JSONObject requestJ) {
@@ -161,7 +161,7 @@ public class ReportCorrectionsController {
     DeleteReport deleteReportCorrections(
 
             @ApiParam(name = "request",
-                    value = "id - id исправления, ",
+                    value = "id - id отчета об исправлении, ",
                     defaultValue = "{id:1}")
             @RequestParam(name = "request") JSONObject requestJ) {
 
